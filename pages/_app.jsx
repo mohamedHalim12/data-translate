@@ -1,12 +1,13 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
+import '../style/global.scss';
+
 import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
-import * as React from 'react';
 
 import createEmotionCache from '../src/createEmotionCache';
 import theme from '../src/theme';
