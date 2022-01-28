@@ -1,0 +1,61 @@
+{
+  "env": { "es2021": true, "node": true, "browser": true },
+  "plugins": ["prettier", "simple-import-sort", "promise", "unicorn", "import"],
+  "extends": [
+    "eslint:recommended",
+    "airbnb",
+    "next/core-web-vitals",
+    "plugin:promise/recommended",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      { "singleQuote": true, "semi": true, "jsxSingleQuote": true },
+      { "usePrettierrc": true }
+    ],
+    "lines-between-class-members": [
+      "error",
+      "always",
+      { "exceptAfterSingleLine": true }
+    ],
+    "promise/catch-or-return": "error",
+    "no-console": "warn",
+    "no-alert": "error",
+    "no-empty": "error",
+    "no-implicit-coercion": "error",
+    "no-underscore-dangle": "off",
+    "no-var": "warn",
+    "no-use-before-define": [
+      "error",
+      { "functions": true, "classes": true, "variables": true }
+    ],
+    "no-empty-function": "warn",
+    "no-confusing-arrow": ["error", { "allowParens": true }],
+    "no-mixed-operators": "error",
+    "no-plusplus": ["warn", { "allowForLoopAfterthoughts": true }],
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "no-param-reassign": ["error", { "props": false }],
+    "sort-imports": "off",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/prefer-default-export": "off",
+    "import/no-duplicates": "error",
+    "react-hooks/rules-of-hooks": "error",
+    "react/function-component-definition": "off",
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["invalidHref", "preferButton"]
+      }
+    ],
+    "jsx-a11y/no-noninteractive-tabindex": [
+      "error",
+      { "tags": ["div", "label"], "roles": ["tabpanel"] }
+    ]
+  }
+}
