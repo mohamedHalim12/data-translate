@@ -29,7 +29,7 @@
     "no-var": "warn",
     "no-use-before-define": [
       "error",
-      { "functions": true, "classes": true, "variables": true }
+      { "functions": false, "classes": true, "variables": true }
     ],
     "no-empty-function": "warn",
     "no-confusing-arrow": ["error", { "allowParens": true }],
