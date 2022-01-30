@@ -6,9 +6,10 @@ import fs from 'fs';
 import AppError from '../../lib/errors';
 import Sentences from '../models/sentences.model';
 
+const langs = { fr: 'Français', km: 'Chikomori' };
 export const createSentence = async ({
   text_vo,
-  text_translated = '',
+  translated_text = '',
   translated_by = '',
   translation_date = undefined,
   accepted_by = undefined,
@@ -17,15 +18,11 @@ export const createSentence = async ({
     throw new AppError('Missing required fields', 400);
   }
 
-  const sentences = await Sentences.create({
+  return Sentences.create({
     text_vo,
-    text_translated,
-    translated_by,
-    translation_date,
+    propositions: [{ translated_text, translated_by, translation_date }],
     accepted_by,
   });
-
-  return sentences;
 };
 
 export const createManySentences = async (sentences) => {
@@ -45,7 +42,7 @@ export const getSentences = async (
   }
   const projection = {
     text_vo: 1,
-    text_translated: 1,
+    translated_text: 1,
     text_id: '$_id',
     ...filter,
     _id: 0,
@@ -53,24 +50,26 @@ export const getSentences = async (
   const sentences = await Sentences.find({ ...criterias }, { ...projection })
     .skip(skip)
     .limit(limit)
+    .lean()
     .exec();
   const totalSentences = await Sentences.countDocuments({ ...criterias });
   const next = totalSentences ? skip + limit : -1;
   const nextStart = next > totalSentences ? totalSentences : next;
-  return { next: nextStart, totalSentences, sentences };
+  const count = sentences.length;
+  return { next: nextStart, totalSentences, langs, sentences, count };
 };
 
 export const getUntranslatedSentences = async (
   skip = 0,
   limit = 10,
   meta = false,
-) => getSentences(skip, limit, meta, { text_translated: { $eq: '' } });
+) => getSentences(skip, limit, meta, { translated_text: { $eq: '' } });
 
 export const getTranslatedSentences = async (
   skip = 0,
   limit = 10,
   meta = false,
-) => getSentences(skip, limit, meta, { text_translated: { $ne: '' } });
+) => getSentences(skip, limit, meta, { translated_text: { $ne: '' } });
 
 export const getSentenceById = async (id) => {
   const sentence = await Sentences.findById(id);
