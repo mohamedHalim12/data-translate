@@ -5,8 +5,25 @@ import fs from 'fs';
 
 import AppError from '../../lib/errors';
 import Sentences from '../models/sentences.model';
+import { getData } from './queries.utils';
+
+/**
+ * @typedef {import('mongoose').Types.ObjectId} ObjectId
+ * @typedef {import('mongoose').Model} Model
+ */
 
 const langs = { fr: 'Français', km: 'Chikomori' };
+
+/**
+ * @typedef {object} sentence
+ * @property {string} text_vo
+ * @property {string} translated_text
+ * @property {string} translated_by
+ * @property {Date} translation_date
+ * @property {string|ObjectId} accepted_by
+ *
+ * @param {sentence} props
+ */
 export const createSentence = async ({
   text_vo,
   translated_text = '',
@@ -20,15 +37,18 @@ export const createSentence = async ({
 
   return Sentences.create({
     text_vo,
-    propositions: [{ translated_text, translated_by, translation_date }],
+    translated_text,
+    translated_by,
+    translation_date,
     accepted_by,
   });
 };
 
-export const createManySentences = async (sentences) => {
-  const createdSentences = await Sentences.insertMany(sentences);
-  return createdSentences;
-};
+/**
+ * @param {sentence[]} sentences
+ */
+export const createManySentences = async (sentences) =>
+  Sentences.insertMany(sentences);
 
 export const getSentences = async (
   skip = 0,
@@ -47,16 +67,11 @@ export const getSentences = async (
     ...filter,
     _id: 0,
   };
-  const sentences = await Sentences.find({ ...criterias }, { ...projection })
-    .skip(skip)
-    .limit(limit)
-    .lean()
-    .exec();
-  const totalSentences = await Sentences.countDocuments({ ...criterias });
-  const next = totalSentences ? skip + limit : -1;
-  const nextStart = next > totalSentences ? totalSentences : next;
-  const count = sentences.length;
-  return { next: nextStart, totalSentences, langs, sentences, count };
+  const props = { model: Sentences, criterias, projection, skip, limit };
+  const result = await getData(props);
+  const data = { langs, ...result };
+  if (!result.data.length) delete data.langs;
+  return data;
 };
 
 export const getUntranslatedSentences = async (
@@ -71,18 +86,24 @@ export const getTranslatedSentences = async (
   meta = false,
 ) => getSentences(skip, limit, meta, { translated_text: { $ne: '' } });
 
+/** @param {string|ObjectId} id */
 export const getSentenceById = async (id) => {
   const sentence = await Sentences.findById(id);
   if (!sentence) throw new AppError('Sentence not found', 404);
   return sentence;
 };
 
+/**
+ * @param {string|ObjectId} id
+ * @param {Object<string,any>} update
+ */
 export const updateSentenceById = async (id, update = {}) => {
   const sentence = await Sentences.findByIdAndUpdate(id, update, { new: true });
   if (!sentence) throw new AppError('Sentence not found', 404);
   return sentence;
 };
 
+/** @param {string|ObjectId} id */
 export const deleteSentenceById = async (id) => {
   const sentence = await Sentences.findByIdAndDelete(id);
   if (!sentence) throw new AppError('Sentence not found', 404);
@@ -95,6 +116,8 @@ export const deleteAllSentences = async () => {
 };
 
 /* eslint-disable no-console */
+
+/** @param {string} filePath */
 export const importSentences = async (filePath) => {
   if (!filePath) {
     throw new AppError('Missing required fields', 400);
@@ -106,6 +129,7 @@ export const importSentences = async (filePath) => {
   csvStream
     .pipe(csvReadableStream)
     .on('data', async (row) => {
+      // @ts-ignore
       const [, text_vo] = row;
       sentences.push({ text_vo });
       i += 1;
@@ -126,4 +150,5 @@ export const importSentences = async (filePath) => {
       throw new AppError('Error importing sentences', 500);
     });
 };
+
 /* eslint-disable no-console */

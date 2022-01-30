@@ -2,15 +2,24 @@
 import AppError from '../../lib/errors';
 import { generateUniqueId } from '../../lib/utils';
 import WaitingQueue from '../models/wainting_queue.model';
+
 /**
- * @param {object} props
- * @param {ObjectId} props.idText_vo
- * @param {string} props.translated_text
- * @param {string} props.translated_by
- * @param {Date} props.translation_date
- * @param {string|ObjectId} props.accepted_by
- * @param {Date} props.acception_date
+ *  @typedef {import('mongoose').Model} Model
+ *  @typedef {import('mongoose').Types.ObjectId} ObjectId
+ * */
+
+/**
+ * @typedef {object} Props
+ * @property {string|ObjectId} idText_vo
+ * @property {string} translated_text
+ * @property {string} translated_by
+ * @property {Date} translation_date
+ * @property {ObjectId} accepted_by
+ * @property {Date} acception_date
+ *
+ * @param {Props} props
  */
+
 export const createWaitingQueue = async ({
   idText_vo,
   translated_text,
@@ -22,7 +31,10 @@ export const createWaitingQueue = async ({
   if (!idText_vo)
     throw new AppError('The text id is required but nothing was given', 400);
   if (!translated_text)
-    throw AppError('The text translated is required but nothing wa given', 400);
+    throw new AppError(
+      'The text translated is required but nothing wa given',
+      400,
+    );
   const _id = generateUniqueId(translated_text).id;
   return WaitingQueue.create({
     idText_vo,
@@ -32,23 +44,31 @@ export const createWaitingQueue = async ({
   });
 };
 
+/**
+ * @param {number} skip
+ * @param {number} limit
+ * @param {Object<string,any>} criterias
+ */
 export const getProposedTranslations = async (
   skip = 0,
   limit = 10,
   criterias = {},
 ) => {
-  const sentences = WaitingQueue.find({ ...criterias }, { id: '$_id', _id: 0 })
+  const filter = {
+    _id: 0,
+  };
+  const data = await WaitingQueue.find({ ...criterias }, filter)
     .skip(skip)
     .limit(limit)
     .populate('idText_vo')
     .lean()
     .exec();
 
-  const totalSentences = await WaitingQueue.countDocuments(criterias).exec();
-  const next = totalSentences ? skip + limit : -1;
-  const nextStart = next > totalSentences ? totalSentences : next;
-  const count = sentences.length;
-  return { next: nextStart, totalSentences, sentences, count };
+  const totalProposed = await WaitingQueue.countDocuments(criterias).exec();
+  const next = totalProposed ? skip + limit : -1;
+  const nextStart = next > totalProposed ? totalProposed : next;
+  const count = data.length;
+  return { count, next: nextStart, totalProposed, data };
 };
 
 /**
@@ -65,12 +85,14 @@ export const existsAPropositions = async (idText_vo) =>
   WaitingQueue.exists({ idText_vo });
 
 /**
+ * @typedef {object} Update
+ * @property {string} _id
+ * @property {string} translated_text
+ * @property {string} translated_by
+ * @property {Date} translation_date
+ *
  * @param {string} idText_vo
- * @param {object} update
- * @param {string} update._id
- * @param {string} update.translated_text
- * @param {string} update.translated_by
- * @param {Date} update.translation_date
+ * @param {Update} update
  */
 
 export const addAproposition = async (idText_vo, update) => {
@@ -79,7 +101,7 @@ export const addAproposition = async (idText_vo, update) => {
     _id: _id || generateUniqueId(translated_text).id,
     translated_text,
     translated_by,
-    translation_date: translation_date || Date(Date.now),
+    translation_date: translation_date || new Date(Date.now()),
   };
   return WaitingQueue.findOneAndUpdate(
     { idText_vo },
