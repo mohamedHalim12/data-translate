@@ -57,7 +57,7 @@ export const getSentences = async (
   const totalSentences = await Sentences.countDocuments({ ...criterias });
   const next = totalSentences ? skip + limit : -1;
   const nextStart = next > totalSentences ? totalSentences : next;
-  return { nextStart, totalSentences, sentences };
+  return { next: nextStart, totalSentences, sentences };
 };
 
 export const getUntranslatedSentences = async (
