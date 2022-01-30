@@ -1,4 +1,5 @@
 import nextConnect from 'next-connect';
+import path from 'path';
 
 import { importSentences } from '../../src/db/models/queries/sentences.queries';
 import Sentences from '../../src/db/models/sentences.model';
@@ -14,8 +15,12 @@ const handler = nextConnect()
           status: 'success',
           message: 'Sentences already imported',
         });
+        return;
       }
-      importSentences('data/french_data.csv');
+
+      const filePath = 'data/french_data.csv';
+      const fullPath = path.join(process.cwd(), filePath);
+      importSentences(fullPath);
       res.status(206).json({ message: '🥸 Importing sentences...' });
     } catch (e) {
       res.status(e.code || 400).json({ message: 'Error importing sentences' });
