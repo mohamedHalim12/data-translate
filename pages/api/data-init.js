@@ -17,11 +17,10 @@ const handler = nextConnect()
         });
         return;
       }
-
       const filePath = 'data/french_data.csv';
       const fullPath = path.join(process.cwd(), filePath);
-      importSentences(fullPath);
-      res.status(206).json({ message: '🥸 Importing sentences...' });
+      await importSentences(fullPath);
+      res.status(201).json({ message: '🥸 Importation finished' });
     } catch (e) {
       res.status(e.code || 400).json({ message: 'Error importing sentences' });
     }
