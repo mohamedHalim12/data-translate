@@ -3,8 +3,8 @@
 import CsvReadableStream from 'csv-reader';
 import fs from 'fs';
 
-import AppError from '../../../lib/errors';
-import Sentences from '../sentences.model';
+import AppError from '../../lib/errors';
+import Sentences from '../models/sentences.model';
 
 export const createSentence = async ({
   text_vo,
@@ -110,7 +110,7 @@ export const importSentences = async (filePath) => {
       const [, text_vo] = row;
       sentences.push({ text_vo });
       i += 1;
-      if (i % 500 === 0) {
+      if (i % 2000 === 0) {
         console.log('>', `${i} rows imported`);
         csvStream.pause();
         await createManySentences(sentences);

@@ -1,6 +1,6 @@
 import nextConnect from 'next-connect';
 
-import { getUntranslatedSentences } from '../../src/db/models/queries/sentences.queries';
+import { getUntranslatedSentences } from '../../src/db/queries/sentences.queries';
 import middleware from '../../src/lib/middlewares';
 /**
  * Retrieve data in
