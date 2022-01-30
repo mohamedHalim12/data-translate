@@ -110,7 +110,7 @@ export const importSentences = async (filePath) => {
       const [, text_vo] = row;
       sentences.push({ text_vo });
       i += 1;
-      if (i % 5000 === 0) {
+      if (i % 20000 === 0) {
         console.log('>', `${i} rows imported`);
         csvStream.pause();
         await createManySentences(sentences);
