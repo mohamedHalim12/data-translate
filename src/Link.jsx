@@ -1,16 +1,31 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { useRouter } from 'next/router';
-import NextLink from 'next/link';
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/jsx-props-no-spreading */
 import MuiLink from '@mui/material/Link';
 import { styled } from '@mui/material/styles';
+import clsx from 'clsx';
+import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
+import * as React from 'react';
 
 // Add support for the sx prop for consistency with the other branches.
 const Anchor = styled('a')({});
 
-export const NextLinkComposed = React.forwardRef(function NextLinkComposed(props, ref) {
-  const { to, linkAs, href, replace, scroll, shallow, prefetch, locale, ...other } = props;
+export const NextLinkComposed = React.forwardRef(function NextLinkComposed(
+  props,
+  ref,
+) {
+  const {
+    to,
+    linkAs,
+    href,
+    replace,
+    scroll,
+    shallow,
+    prefetch,
+    locale,
+    ...other
+  } = props;
 
   return (
     <NextLink
@@ -29,7 +44,7 @@ export const NextLinkComposed = React.forwardRef(function NextLinkComposed(props
 });
 
 NextLinkComposed.propTypes = {
-  href: PropTypes.any,
+  href: PropTypes.string,
   linkAs: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   locale: PropTypes.string,
   passHref: PropTypes.bool,
@@ -60,7 +75,8 @@ const Link = React.forwardRef(function Link(props, ref) {
   });
 
   const isExternal =
-    typeof href === 'string' && (href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);
+    typeof href === 'string' &&
+    (href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);
 
   if (isExternal) {
     if (noLinkStyle) {
@@ -71,7 +87,9 @@ const Link = React.forwardRef(function Link(props, ref) {
   }
 
   if (noLinkStyle) {
-    return <NextLinkComposed className={className} ref={ref} to={href} {...other} />;
+    return (
+      <NextLinkComposed className={className} ref={ref} to={href} {...other} />
+    );
   }
 
   return (
@@ -90,7 +108,7 @@ Link.propTypes = {
   activeClassName: PropTypes.string,
   as: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   className: PropTypes.string,
-  href: PropTypes.any,
+  href: PropTypes.string,
   linkAs: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   noLinkStyle: PropTypes.bool,
   role: PropTypes.string,

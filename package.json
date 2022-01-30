@@ -20,6 +20,7 @@
     "@mui/material": "latest",
     "bcrypt": "^5.0.1",
     "chalk": "^5.0.0",
+    "clsx": "^1.1.1",
     "cors": "^2.8.5",
     "csv-reader": "^1.0.8",
     "helmet": "^5.0.2",
