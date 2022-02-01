@@ -117,19 +117,27 @@ export const deleteAllSentences = async () => {
 
 /* eslint-disable no-console */
 
-/** @param {string} filePath */
-export const importSentences = async (filePath) => {
+/**
+ * @param {string} filePath Path to the CSV file.
+ * @param {number} nbMaxDocs - Number of documents to import
+ */
+export const importSentences = async (filePath, nbMaxDocs = -1) => {
   if (!filePath) {
     throw new AppError('Missing required fields', 400);
   }
   const csvStream = fs.createReadStream(filePath, 'utf8');
   const csvReadableStream = new CsvReadableStream({ trim: true });
   const sentences = [];
+  const maxDocs = Number(nbMaxDocs) || -1;
   let i = 0;
   csvStream
     .pipe(csvReadableStream)
     .on('data', async (row) => {
-      // @ts-ignore
+      if (maxDocs >= 0 && i >= maxDocs) {
+        csvStream.destroy();
+        return;
+      }
+
       const [, text_vo] = row;
       sentences.push({ text_vo });
       i += 1;

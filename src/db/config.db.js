@@ -2,11 +2,25 @@
 import chalk from 'chalk';
 import { connect, connection } from 'mongoose';
 
-export async function initiateDbConnexion() {
-  const DEV_DB_URI = 'mongodb://localhost:27017/data-translate';
-  // const DEV_DB_URI =
-  //   'mongodb+srv://acem:dB6bc8U5vHUnmQ8@cluster0.2nlmg.mongodb.net/data-translate?retryWrites=true&w=majority';
-  const DB_URI = process.env.DB_URI || DEV_DB_URI;
+/**
+ * Connect to the database, and configure it.
+ * @param {string} dbName Database name to use in development.
+ * @param {boolean} testing Whether or not we are in testing mode.
+ * If so, the database name will have a `test` suffix.
+ *
+ * @example
+ * // In testing mode (`data-translate-test`)
+ * await initiateDbConnexion('data-translate', true);
+ * // In non test mode (`data-translate`)
+ * await initiateDbConnexion('data-translate', false);
+ */
+export async function initiateDbConnexion(
+  dbName = 'data-translate',
+  testing = false,
+) {
+  const DB_URL = `mongodb://localhost:27017/${dbName}`;
+  const TEST_DB_URL = `${DB_URL}-test`;
+  const DB_URI = testing ? TEST_DB_URL : process.env.DB_URI || DB_URL;
   try {
     await connect(DB_URI);
     const connected = chalk.yellowBright('MongoDB Connection established');
@@ -15,8 +29,9 @@ export async function initiateDbConnexion() {
     console.log();
     console.log('>', `${connected} on ${conString}`);
     console.log();
+    return connection;
   } catch (err) {
-    console.log('>', chalk.red(`MongoDB Connection error `, err));
+    return console.log('>', chalk.red(`MongoDB Connection error `, err));
   }
 }
 
