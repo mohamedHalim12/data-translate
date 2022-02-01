@@ -20,4 +20,4 @@ yarn-error.log*
 # Next.js
 /.next
 tests.js
-.eslintcache
+/.eslintcache
