@@ -1,8 +1,8 @@
 // @ts-nocheck
 import nextConnect from 'next-connect';
 
-import { getUntranslatedSentences } from '../../src/db/queries/sentences.queries';
-import middleware from '../../src/lib/middlewares';
+import { getUntranslatedSentences } from '../../../src/db/queries/sentences.queries';
+import middleware from '../../../src/lib/middlewares';
 /**
  * Retrieve data in
  */
