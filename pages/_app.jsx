@@ -9,8 +9,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 
-import createEmotionCache from '../src/createEmotionCache';
-import theme from '../src/theme';
+import createEmotionCache from '@/lib/createEmotionCache';
+import theme from '@/theme/theme';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();

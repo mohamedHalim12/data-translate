@@ -3,7 +3,8 @@
 import CsvReadableStream from 'csv-reader';
 import fs from 'fs';
 
-import AppError from '../../lib/errors';
+import AppError from '@/lib/errors';
+
 import Sentences from '../models/sentences.model';
 import { getData, getRandomData } from './queries.utils';
 

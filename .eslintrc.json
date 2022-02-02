@@ -1,12 +1,4 @@
 {
-  "settings": {
-    "import/resolver": {
-      "jsconfig": {
-        "config": "jsconfig.json",
-        "extensions": [".js", ".json", ".vue"]
-      }
-    }
-  },
   "env": { "es2021": true, "node": true, "browser": true, "jest": true },
   "plugins": ["prettier", "simple-import-sort", "promise", "unicorn", "import"],
   "extends": [
@@ -65,5 +57,19 @@
       "error",
       { "tags": ["div", "label"], "roles": ["tabpanel"] }
     ]
+  },
+  "settings": {
+    "import/resolver": {
+      "eslint-import-resolver-custom-alias": {
+        "alias": {
+          "@/db": "./src/db",
+          "@/lib": "./src/lib",
+          "@/components": "./src/components",
+          "@/theme": "./src/theme",
+          "@/api-utils": "./src/api-utils"
+        },
+        "extensions": [".js", ".jsx"]
+      }
+    }
   }
 }
