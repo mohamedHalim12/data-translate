@@ -29,9 +29,40 @@ export async function getData({
   const data = await model
     .find({ ...criterias }, { ...projection })
     .skip(skip)
-    .limit(limit)
+    .limit(limit || 10)
     .lean()
     .exec();
+  return calculateData({ model, criterias, skip, limit, data });
+}
+
+/**
+ * @param {Props} props
+ * @returns {Promise<Ret>}
+ */
+export async function getRandomData({
+  model,
+  skip,
+  limit,
+  criterias = {},
+  projection = {},
+}) {
+  const data = await model.aggregate([
+    { $match: criterias },
+    { $sample: { size: limit || 10 } },
+    { $project: projection },
+  ]);
+
+  return calculateData({ model, criterias, skip, limit, data });
+}
+
+/**
+ * @typedef {object} Data
+ * @property {Array} data
+ *
+ * @param {Props & Data} props
+ * @returns {Promise<Ret>}
+ */
+async function calculateData({ model, criterias, skip, limit, data }) {
   const totalData = await model.countDocuments({ ...criterias });
   const next = totalData ? skip + limit : -1;
   const nextStart = next > totalData ? totalData : next;
