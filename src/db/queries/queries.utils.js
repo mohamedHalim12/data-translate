@@ -51,7 +51,6 @@ export async function getRandomData({
     { $sample: { size: limit || 10 } },
     { $project: projection },
   ]);
-
   return calculateData({ model, criterias, skip, limit, data });
 }
 
