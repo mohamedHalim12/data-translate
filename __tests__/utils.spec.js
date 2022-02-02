@@ -1,4 +1,4 @@
-const { default: axios } = require('axios');
+import axios from 'axios';
 
 describe('Get a list of sentences from the API', () => {
   const baseUrl = 'http://localhost:3000';
