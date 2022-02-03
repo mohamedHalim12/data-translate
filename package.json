@@ -2,6 +2,7 @@
   "name": "data-translate",
   "version": "1.0.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "up": "yarn upgrade --latest",
     "dev": "next dev",
@@ -19,6 +20,7 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
+    "@tailwindcss/line-clamp": "^0.3.1",
     "axios": "^0.25.0",
     "bcrypt": "^5.0.1",
     "chalk": "^5.0.0",
