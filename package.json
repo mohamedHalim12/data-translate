@@ -15,9 +15,7 @@
   },
   "dependencies": {
     "@emotion/cache": "latest",
-    "@emotion/react": "latest",
     "@emotion/server": "latest",
-    "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
     "@mui/styles": "^5.3.0",

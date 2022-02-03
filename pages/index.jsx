@@ -12,6 +12,8 @@ import BurgerMenu from '@/components/Burger/BurgerMenu';
 import Copyright from '@/components/misc/Copyright';
 import FZDialog from '@/components/misc/Dialog';
 
+import Header from '../src/components/Header';
+
 export default function Index() {
   /**
    * @type {{data:QueriedSentences}}
@@ -41,6 +43,7 @@ export default function Index() {
   if (!data) return <div>Loading...</div>;
   return (
     <Container maxWidth='xl' className='py-6'>
+      <Header />
       <Stack gap={2}>
         <Typography
           variant='h4'
