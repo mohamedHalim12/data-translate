@@ -20,7 +20,7 @@ const handler = nextConnect()
       const filePath = 'data/french_data.csv';
       const fullPath = path.join(process.cwd(), filePath);
       importSentences(fullPath);
-      res.status(201).json({ message: '🥸 Importation finished' });
+      res.status(201).json({ message: '🥸 Importation in progress...' });
     } catch (e) {
       res.status(e.code || 400).json({ message: 'Error importing sentences' });
     }
