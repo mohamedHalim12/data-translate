@@ -2,6 +2,7 @@
   "name": "data-translate",
   "version": "1.0.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "up": "yarn upgrade --latest",
     "dev": "next dev",
@@ -19,6 +20,7 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
+    "@tailwindcss/line-clamp": "^0.3.1",
     "axios": "^0.25.0",
     "bcrypt": "^5.0.1",
     "chalk": "^5.0.0",
@@ -46,6 +48,7 @@
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-next": "^12.0.10",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-custom-alias": "^1.3.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^4.0.0",

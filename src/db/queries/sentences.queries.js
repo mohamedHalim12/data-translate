@@ -3,14 +3,10 @@
 import CsvReadableStream from 'csv-reader';
 import fs from 'fs';
 
-import AppError from '../../lib/errors';
-import Sentences from '../models/sentences.model';
-import { getData } from './queries.utils';
+import AppError from '@/lib/errors';
 
-/**
- * @typedef {import('mongoose').Types.ObjectId} ObjectId
- * @typedef {import('mongoose').Model} Model
- */
+import Sentences from '../models/sentences.model';
+import { getData, getRandomData } from './queries.utils';
 
 const langs = { fr: 'Français', km: 'Chikomori' };
 
@@ -56,19 +52,41 @@ export const getSentences = async (
   meta = false,
   criterias = {},
 ) => {
-  let filter = {};
-  if (meta === true) {
-    filter = { translated_by: 1, createdAt: 1, updatedAt: 1 };
-  }
   const projection = {
     text_vo: 1,
     translated_text: 1,
     text_id: '$_id',
-    ...filter,
+    ...(meta === true ? { translated_by: 1, createdAt: 1, updatedAt: 1 } : {}),
     _id: 0,
   };
   const props = { model: Sentences, criterias, projection, skip, limit };
   const result = await getData(props);
+  const data = { langs, ...result };
+  if (!result.data.length) delete data.langs;
+  return data;
+};
+
+export const getRandomSentences = async (
+  limit = 10,
+  meta = false,
+  criterias = {},
+) => {
+  const projection = {
+    text_vo: 1,
+    translated_text: 1,
+    text_id: '$_id',
+    ...(meta === true ? { translated_by: 1, createdAt: 1, updatedAt: 1 } : {}),
+    _id: 0,
+  };
+  const props = {
+    model: Sentences,
+    criterias,
+    projection,
+    skip: 0,
+    limit,
+    sort: { createdAt: -1 },
+  };
+  const result = await getRandomData(props);
   const data = { langs, ...result };
   if (!result.data.length) delete data.langs;
   return data;
@@ -91,6 +109,30 @@ export const getSentenceById = async (id) => {
   const sentence = await Sentences.findById(id);
   if (!sentence) throw new AppError('Sentence not found', 404);
   return sentence;
+};
+
+export const getRandomTranslatedSentences = async (limit = 10, meta = false) =>
+  getRandomSentences(limit, meta, { translated_text: { $ne: '' } });
+
+export const getRandomUntranslatedSentences = async (
+  limit = 10,
+  meta = false,
+) => getRandomSentences(limit, meta, { translated_text: { $eq: '' } });
+
+/**
+ * @type {RandomQueriesFunction}
+ */
+export const queryRandomSentences = {
+  translated: getRandomTranslatedSentences,
+  untranslated: getRandomUntranslatedSentences,
+};
+
+/**
+ * @type {NonRandomQueriesFunction}
+ */
+export const querySentences = {
+  translated: getTranslatedSentences,
+  untranslated: getUntranslatedSentences,
 };
 
 /**

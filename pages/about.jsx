@@ -3,9 +3,9 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
-import Copyright from '../src/Copyright';
-import Link from '../src/Link';
-import ProTip from '../src/ProTip';
+import Copyright from '@/components/Copyright';
+import Link from '@/components/Link';
+import ProTip from '@/components/ProTip';
 
 export default function About() {
   return (

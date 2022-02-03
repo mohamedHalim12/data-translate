@@ -1,9 +1,9 @@
 import nextConnect from 'next-connect';
 import path from 'path';
 
-import Sentences from '../../src/db/models/sentences.model';
-import { importSentences } from '../../src/db/queries/sentences.queries';
-import middleware from '../../src/lib/middlewares';
+import Sentences from '@/db/models/sentences.model';
+import { importSentences } from '@/db/queries/sentences.queries';
+import middleware from '@/lib/middlewares';
 
 const handler = nextConnect()
   .use(middleware)
@@ -20,7 +20,7 @@ const handler = nextConnect()
       const filePath = 'data/french_data.csv';
       const fullPath = path.join(process.cwd(), filePath);
       importSentences(fullPath);
-      res.status(201).json({ message: '🥸 Importation finished' });
+      res.status(201).json({ message: '🥸 Importation in progress...' });
     } catch (e) {
       res.status(e.code || 400).json({ message: 'Error importing sentences' });
     }
