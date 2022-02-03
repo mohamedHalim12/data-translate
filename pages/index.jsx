@@ -11,6 +11,8 @@ import useSWR from 'swr';
 import Copyright from '@/components/Copyright';
 import ProTip from '@/components/ProTip';
 
+import Header from '../src/components/Header';
+
 export default function Index() {
   /**
    * @type {{data:QueriedSentences}}
@@ -22,6 +24,7 @@ export default function Index() {
 
   return (
     <Container maxWidth='xl' className='py-6'>
+      <Header />
       <Stack gap={2}>
         <Typography
           variant='h4'

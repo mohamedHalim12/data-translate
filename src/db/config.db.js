@@ -21,6 +21,7 @@ export async function initiateDbConnexion(
   const DB_URL = `mongodb://localhost:27017/${dbName}`;
   const TEST_DB_URL = `${DB_URL}-test`;
   const DB_URI = testing ? TEST_DB_URL : process.env.DB_URI || DB_URL;
+  console.log(chalk.blue(`Connecting to ${DB_URI}...`));
   try {
     await connect(DB_URI);
     const connected = chalk.yellowBright('MongoDB Connection established');

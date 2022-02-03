@@ -15,9 +15,7 @@
   },
   "dependencies": {
     "@emotion/cache": "latest",
-    "@emotion/react": "latest",
     "@emotion/server": "latest",
-    "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
     "@tailwindcss/line-clamp": "^0.3.1",

@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.nav-element {
+  @apply bg-cyan-50 p-4 hover:bg-cyan-200 hover:underline decoration-2 rounded-[.5rem];
+}
