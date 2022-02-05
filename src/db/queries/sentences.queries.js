@@ -11,14 +11,7 @@ import { getData, getRandomData } from './queries.utils';
 const langs = { fr: 'Français', km: 'Chikomori' };
 
 /**
- * @typedef {object} sentence
- * @property {string} text_vo
- * @property {string} translated_text
- * @property {string} translated_by
- * @property {Date} translation_date
- * @property {string|ObjectId} accepted_by
- *
- * @param {sentence} props
+ * @param {SentenceData} props
  */
 export const createSentence = async ({
   text_vo,
@@ -41,7 +34,7 @@ export const createSentence = async ({
 };
 
 /**
- * @param {sentence[]} sentences
+ * @param {SentenceData[]} sentences
  */
 export const createManySentences = async (sentences) =>
   Sentences.insertMany(sentences);
