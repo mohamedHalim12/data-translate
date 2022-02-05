@@ -3,5 +3,9 @@
 @tailwind utilities;
 
 .nav-element {
-  @apply bg-cyan-50 p-4 hover:bg-cyan-200 hover:underline decoration-2 rounded-[.5rem];
+  @apply flex w-full text-white p-4 hover:bg-cyan-700 hover:underline decoration-2;
+}
+
+.link-underlined {
+  @apply hover:underline decoration-2;
 }

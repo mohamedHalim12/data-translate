@@ -6,12 +6,12 @@ import clsx from 'clsx';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import * as React from 'react';
+import { forwardRef } from 'react';
 
 // Add support for the sx prop for consistency with the other branches.
 const Anchor = styled('a')({});
 
-export const NextLinkComposed = React.forwardRef(function NextLinkComposed(
+export const NextLinkComposed = forwardRef(function NextLinkComposed(
   props,
   ref,
 ) {
@@ -57,7 +57,7 @@ NextLinkComposed.propTypes = {
 
 // A styled version of the Next.js Link component:
 // https://nextjs.org/docs/api-reference/next/link
-const Link = React.forwardRef(function Link(props, ref) {
+const Link = forwardRef(function Link(props, ref) {
   const {
     activeClassName = 'active',
     as: linkAs,
