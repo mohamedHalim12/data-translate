@@ -10,6 +10,7 @@ module.exports = {
       screens: {
         xsh: { raw: '(min-height: 268px)' },
         smh: { raw: '(min-height: 350px)' },
+        tablet: { raw: '(min-width: 640px)' },
       },
     },
   },

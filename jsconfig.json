@@ -8,6 +8,9 @@
       "@/theme/*": ["./src/theme/*"],
       "@/api-utils/*": ["./src/api-utils/*"],
       "@/images/*": ["./public/images/*"]
-    }
-  }
+    },
+    "checkJs": true
+  },
+  "exclude": ["node_modules"],
+  "include": ["src/**/*", "pages/**/*"]
 }

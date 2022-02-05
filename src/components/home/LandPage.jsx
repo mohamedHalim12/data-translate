@@ -28,7 +28,7 @@ const LandPage = () => {
             variant='contained'
             component={Link}
             noLinkStyle
-            href='/'
+            href='/translation'
             className='bg-green-600 hover:bg-blue-800 font-bold'
             startIcon={<GTranslateOutlinedIcon />}
           >
