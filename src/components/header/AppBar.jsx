@@ -37,13 +37,17 @@ export default function HeaderAppBar() {
 function AppLogo({ sx }) {
   return (
     <Box sx={sx}>
-      <Typography
-        variant='h1'
-        className='flex gap-[0.5] justify-center border-r-2 pr-2 items-baseline text-xl font-bold foont-mono text-center text-white '
-      >
-        <span className='text-xl text-amber-400 '>SHIKOMORI</span>
-        <small className='text-[.78rem] font-normal'>Taradjam</small>
-      </Typography>
+      <Link href='/'>
+        <a className='flex justify-center items-center'>
+          <Typography
+            variant='h1'
+            className='flex gap-[0.5] justify-center border-r-2 pr-2 items-baseline text-xl font-bold foont-mono text-center text-white '
+          >
+            <span className='text-xl text-amber-400 '>SHIKOMORI</span>
+            <small className='text-[.78rem] font-normal'>Taradjam</small>
+          </Typography>
+        </a>
+      </Link>
     </Box>
   );
 }
