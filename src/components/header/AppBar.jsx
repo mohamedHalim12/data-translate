@@ -12,8 +12,10 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Link from 'next/link';
 import { cloneElement, useState } from 'react';
 
+import AppLogo from '../app/AppLogo';
+
 const pages = [
-  { name: 'Ajouter des traduction', href: '/translation/add' },
+  { name: 'Ajouter des traduction', href: '/translation/' },
   { name: 'Valider des traductions', href: '/translation/validate/' },
 ];
 
@@ -23,7 +25,7 @@ export default function HeaderAppBar() {
       <AppBar position='sticky'>
         <Container>
           <Toolbar disableGutters className='flex justify-between'>
-            <AppLogo sx={{ display: { xs: 'none', md: 'flex' } }} />
+            <AppLogo borderBase sx={{ display: { xs: 'none', md: 'flex' } }} />
             <LeftNavLinks />
             <AppLogo sx={{ display: { xs: 'flex', md: 'none' } }} />
             <RightNavLinks />
@@ -31,24 +33,6 @@ export default function HeaderAppBar() {
         </Container>
       </AppBar>
     </ElevationScroll>
-  );
-}
-
-function AppLogo({ sx }) {
-  return (
-    <Box sx={sx}>
-      <Link href='/'>
-        <a className='flex justify-center items-center'>
-          <Typography
-            variant='h1'
-            className='flex gap-[0.5] justify-center border-r-2 pr-2 items-baseline text-xl font-bold foont-mono text-center text-white '
-          >
-            <span className='text-xl text-amber-400 '>SHIKOMORI</span>
-            <small className='text-[.78rem] font-normal'>Taradjam</small>
-          </Typography>
-        </a>
-      </Link>
-    </Box>
   );
 }
 
