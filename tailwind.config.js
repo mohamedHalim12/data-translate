@@ -7,10 +7,6 @@ module.exports = {
       backgroundImage: {
         'hero-pattern': 'url("../public/images/background1.jpg")',
       },
-      screens: {
-        xsh: { raw: '(min-height: 268px)' },
-        smh: { raw: '(min-height: 350px)' },
-      },
     },
   },
 };

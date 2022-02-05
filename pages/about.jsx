@@ -3,8 +3,9 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
-import Copyright from '@/components/misc/Copyright';
-import Link from '@/components/misc/Link';
+import Copyright from '@/components/Copyright';
+import Link from '@/components/Link';
+import ProTip from '@/components/ProTip';
 
 export default function About() {
   return (
@@ -16,6 +17,7 @@ export default function About() {
         <Button variant='contained' component={Link} noLinkStyle href='/'>
           Go to the main page
         </Button>
+        <ProTip />
         <Copyright />
       </Box>
     </Container>

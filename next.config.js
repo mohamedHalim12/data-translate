@@ -6,10 +6,11 @@ const excludeConsole = env === 'production' ? ['error'] : ['error', 'log'];
 module.exports = {
   reactStrictMode: true,
   poweredByHeader: false,
-  swcMinify: false,
+  swcMinify: true,
   async headers() {
     return [{ source: '/(.*)', headers: createSecureHeaders() }];
   },
-  removeConsole: { exclude: excludeConsole },
-  // experimental: {},
+  experimental: {
+    removeConsole: { exclude: excludeConsole },
+  },
 };

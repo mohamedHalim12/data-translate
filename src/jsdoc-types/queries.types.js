@@ -21,7 +21,3 @@
  * @typedef {RandomQueriesFunction}
  * @typedef {NonRandomQueriesFunction}
  */
-
-/**
- * @typedef {{text_vo:string,translated_text:string, translated_by:string, translation_date:Date, accepted_by: string|ObjectId }} SentenceData
- */
