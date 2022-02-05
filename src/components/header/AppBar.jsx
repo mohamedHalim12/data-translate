@@ -9,12 +9,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Toolbar from '@mui/material/Toolbar';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import Image from 'next/image';
 import Link from 'next/link';
-import { cloneElement, useEffect, useState } from 'react';
-
-import logoDark from '@/images/logoDark.png';
-import logoLight from '@/images/logoLight.png';
+import { cloneElement, useState } from 'react';
 
 const pages = [
   { name: 'Ajouter des traduction', href: '/translation/add' },
@@ -39,24 +35,15 @@ export default function HeaderAppBar() {
 }
 
 function AppLogo({ sx }) {
-  const [isHovering, setIsHovered] = useState(false);
-  const [src, setSrc] = useState(logoDark);
-  const onMouseEnter = () => setIsHovered(true);
-  const onMouseLeave = () => setIsHovered(false);
-  useEffect(() => {
-    if (isHovering) setSrc(logoLight);
-    else setSrc(logoDark);
-  }, [isHovering]);
   return (
-    <Box sx={sx} className='relative w-[100px] items-center justify-center'>
-      <Image
-        src={src}
-        alt='Data translate logo'
-        className='w-full h-full min-w-full object-cover'
-        layout='intrinsic'
-        onMouseOver={onMouseEnter}
-        onMouseOut={onMouseLeave}
-      />
+    <Box sx={sx}>
+      <Typography
+        variant='h1'
+        className='flex gap-[0.5] justify-center border-r-2 pr-2 items-baseline text-xl font-bold foont-mono text-center text-white '
+      >
+        <span className='text-xl text-amber-400 '>SHIKOMORI</span>
+        <small className='text-[.78rem] font-normal'>Taradjam</small>
+      </Typography>
     </Box>
   );
 }
