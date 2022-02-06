@@ -3,7 +3,13 @@ import GradingTwoToneIcon from '@mui/icons-material/GradingTwoTone';
 import { Button, Skeleton, Stack, TextField } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-export function TranslationBlock({ isLoading = false, text_id, text_vo }) {
+import { useSentences } from '@/hooks/hooks';
+
+export function TranslationBlock() {
+  const result = useSentences({ variant: 'both', start: 58, limit: 10 });
+  const { data, isLoading } = result;
+  const { text_id, text_vo } = !isLoading && data.data[0];
+
   return (
     <Stack
       gap={0.5}

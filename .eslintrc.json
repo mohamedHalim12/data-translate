@@ -65,6 +65,7 @@
           "@/db": "./src/db",
           "@/lib": "./src/lib",
           "@/components": "./src/components",
+          "@/hooks": "./src/hooks",
           "@/theme": "./src/theme",
           "@/api-utils": "./src/api-utils",
           "@/images": "./public/images"

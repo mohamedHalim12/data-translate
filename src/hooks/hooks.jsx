@@ -9,11 +9,12 @@ const fetcher = (url) => axios.get(url).then((res) => res.data);
  * @param {boolean} meta
  * @param {number} start
  */
-export const useFetchSentences = (key) => {
+const useFetchSentences = (key) => {
   /** @type {import('swr').SWRResponse<QueriedSentences>} */
   const res = useSWR(key, fetcher);
   const { data, error, mutate } = res;
-  return { data, error, mutate, loading: !data && !error };
+  const hasMore = data && data.next < data.totalData;
+  return { data, error, mutate, hasMore, isLoading: !data && !error };
 };
 
 export const useUnstranslatedSentences = ({
@@ -41,6 +42,13 @@ export const useTranslatedSentences = ({
  *  meta?:boolean,
  *  variant?:"translated"|"untranslated"|"both"
  * }} query
+ *
+ * @returns {{
+ *  data: SentenceData[],
+ *  isLoading: boolean,
+ *  hasMore: boolean,
+ *  mutate: import('swr').KeyedMutator<QueriedSentences>
+ * }}
  */
 export const useSentences = ({
   start = 0,

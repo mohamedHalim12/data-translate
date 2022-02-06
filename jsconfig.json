@@ -4,12 +4,12 @@
     "paths": {
       "@/db/*": ["./src/db/*"],
       "@/lib/*": ["./src/lib/*"],
+      "@/hooks/*": ["./src/hooks/*"],
       "@/components/*": ["./src/components/*"],
       "@/theme/*": ["./src/theme/*"],
       "@/api-utils/*": ["./src/api-utils/*"],
       "@/images/*": ["./public/images/*"]
-    },
-    "checkJs": true
+    }
   },
   "exclude": ["node_modules"],
   "include": ["src/**/*", "pages/**/*"]
