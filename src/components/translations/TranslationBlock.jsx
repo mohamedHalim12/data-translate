@@ -3,7 +3,7 @@ import GradingTwoToneIcon from '@mui/icons-material/GradingTwoTone';
 import { Button, Skeleton, Stack, TextField } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-import { useSentences } from '@/hooks/hooks';
+import { useSentences } from '@/hooks/useDataFetching';
 
 export function TranslationBlock() {
   const result = useSentences({ variant: 'both', start: 58, limit: 10 });

@@ -2,7 +2,7 @@
 import { List, ListItem, Skeleton } from '@mui/material';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { useSentences } from '@/hooks/hooks';
+import { useSentences } from '@/hooks/useDataFetching';
 
 import TextVo from './TextVo';
 
