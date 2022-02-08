@@ -9,7 +9,7 @@ const handler = nextConnect()
   .use(middleware)
   .get(async (req, res) => {
     try {
-      const { start, limit = 10, meta = false, stype } = req.query;
+      const { start = 1, limit = 10, meta = false, stype } = req.query;
       if (stype !== 'sentences') throw new AppError('Invalid slug', 404);
       const result = await getSentences(
         Number(start),

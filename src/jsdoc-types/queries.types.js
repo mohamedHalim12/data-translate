@@ -24,4 +24,7 @@
 
 /**
  * @typedef {{text_vo:string,translated_text:string, translated_by:string, translation_date:Date, accepted_by: string|ObjectId }} SentenceData
+ * @typedef {SentenceData & {text_id:string}} SentenceDataWithId
+ * @typedef {{ count: number; next: number; totalData: number;data: SentenceDataWithId[];langs: {fr: string;km: string;};}} ResponseSentences
+ 
  */

@@ -39,6 +39,7 @@ export const createSentence = async ({
 export const createManySentences = async (sentences) =>
   Sentences.insertMany(sentences);
 
+/** @return {Promise<ResponseSentences>} */
 export const getSentences = async (
   skip = 0,
   limit = 10,
