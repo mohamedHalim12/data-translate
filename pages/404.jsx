@@ -7,7 +7,7 @@ import notFOundImg from '@/images/404-dark.svg';
 export default function NotFoundPage() {
   return (
     <AppLayout className='bg-cyan-50 overflow-hidden' contentOverflow>
-      <Stack className=' p-8 h-full justify-start lgh:justify-center'>
+      <Stack className=' p-8 justify-start items-center lgh:justify-center'>
         <Stack className='gap-6 items-center'>
           <Box
             className={`
@@ -28,10 +28,8 @@ export default function NotFoundPage() {
             </Typography>
           </Box>
 
-          <Box className='relative'>
+          <Box className='relative w-full'>
             <Image
-              data-theme='switch'
-              className=''
               src={notFOundImg}
               width={450}
               height={350}
@@ -51,7 +49,7 @@ export default function NotFoundPage() {
             <Typography variant='h1' component='h1' fontSize='2rem'>
               <span> Ourengué </span>{' '}
               <span className='text-blue-500 font-normal'>ndziya</span> amba{' '}
-              <span className='text-red-600 font-normal'> kaysi existé</span>!
+              <span className='text-red-600 font-normal'> kaysi existé</span> !
             </Typography>
           </Box>
         </Stack>
