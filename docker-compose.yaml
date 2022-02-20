@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  db:
+    networks:
+      - mongo-net
+    image: mongo:5
+    restart: 'always'
+    container_name: mongodb
+    environment:
+      DATA_DIR: /data/db
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-dir:/data/db
+
+volumes:
+  mongo-dir:
+
+networks:
+  mongo-net:
