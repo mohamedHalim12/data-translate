@@ -1,14 +1,24 @@
 import { model, models, Schema } from 'mongoose';
 
+import Sentences from './sentences.model';
+
 const waitingQueueSchema = new Schema(
   {
-    idText_vo: { type: Schema.Types.ObjectId, required: true },
+    idText_vo: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: Sentences,
+    },
     propositions: [
       {
         _id: { type: String, required: true, unique: true },
         translated_text: { type: String, required: true },
         translated_by: { type: String, required: true },
         translation_date: { type: Date, default: Date.now },
+        votes: {
+          like: { type: Number, default: 0 },
+          dislike: { type: Number, default: 0 },
+        },
       },
     ],
     acception_date: { type: Date },

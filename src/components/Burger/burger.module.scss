@@ -88,6 +88,7 @@ $burger-primary-color: #001044;
     + .burger_menu__label {
       padding-block: 1rem;
     }
+
     + .burger_menu__label::before {
       box-shadow: none;
       @include use-TranslateY-rotate();

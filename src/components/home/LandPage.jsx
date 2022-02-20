@@ -58,6 +58,7 @@ const LandPage = () => {
 };
 
 export default LandPage;
+
 function ResponsiveAppLogo() {
   return (
     <>

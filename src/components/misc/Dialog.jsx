@@ -9,20 +9,35 @@ import {
 import { useEffect, useRef } from 'react';
 
 import Transition from './Transition';
+
 /**
- * @typedef {import('react').FC} FC
- * @typedef {import('react').ReactNode} ReactNode
+ * @typedef {import("react").FC} FC
+ * @typedef {import("react").ReactNode} ReactNode
  * @param {{
  *  setOpen:Dispatch<SetStateAction<boolean>>,
  *  open:boolean,
  *  children:ReactNode,
  *  title:string,
- *  sx?:import('@mui/material').SxProps<import('@mui/material').Theme>
+ *  sx?:import("@mui/material").SxProps<import("@mui/material").Theme>
+ *  closeBtnText?:string,
+ *  CloseButtonComponent?: Button | typeof Button,
+ *  closeOnlyOnBtnClick?:boolean
  * }} props
  */
 
-const FZDialog = ({ open = false, setOpen, children, title = '', sx }) => {
-  const handleClose = () => setOpen(false);
+const FZDialog = ({
+  open = false,
+  setOpen = () => {},
+  children,
+  title = '',
+  sx,
+  closeBtnText = 'Fermer',
+  CloseButtonComponent = Button,
+  closeOnlyOnBtnClick = false,
+}) => {
+  const handleClose = () => {
+    setOpen(false);
+  };
   const descriptionElementRef = useRef(null);
   useEffect(() => {
     if (open) {
@@ -33,10 +48,9 @@ const FZDialog = ({ open = false, setOpen, children, title = '', sx }) => {
     }
   }, [open]);
   return (
-    // <div className='dialog'>
     <Dialog
       open={open}
-      onClose={handleClose}
+      onClose={!closeOnlyOnBtnClick ? handleClose : () => {}}
       aria-labelledby='scroll-dialog-title'
       aria-describedby='scroll-dialog-description'
       TransitionComponent={Transition}
@@ -52,12 +66,11 @@ const FZDialog = ({ open = false, setOpen, children, title = '', sx }) => {
       )}
       <DialogContent className='p-0'>{children}</DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} className='font-bold'>
-          Fermer
-        </Button>
+        <CloseButtonComponent onClick={handleClose} className='font-bold'>
+          {closeBtnText}
+        </CloseButtonComponent>
       </DialogActions>
     </Dialog>
-    // </div>
   );
 };
 

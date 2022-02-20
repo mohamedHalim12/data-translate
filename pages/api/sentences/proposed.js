@@ -1,5 +1,6 @@
 // @ts-nocheck
 /* eslint-disable camelcase */
+import { isValidObjectId } from 'mongoose';
 import nextConnect from 'next-connect';
 
 import {
@@ -7,11 +8,11 @@ import {
   createWaitingQueue,
   existsAPropositions,
   existsSameProposition,
-  getProposedTranslations,
-} from '../../src/db/queries/waitingQueue.queries';
-import AppError from '../../src/lib/errors';
-import middleware from '../../src/lib/middlewares';
-import { generateUniqueId } from '../../src/lib/utils';
+  getPropositionByIdTextVo,
+} from '@/db/queries/waitingQueue.queries';
+import AppError from '@/lib/errors';
+import middleware from '@/lib/middlewares';
+import { generateUniqueId } from '@/lib/utils';
 
 const handler = nextConnect().use(middleware);
 
@@ -42,14 +43,14 @@ handler.post(async (req, res) => {
     const { id } = generateUniqueId(translated_text);
     if (await existsSameProposition(id)) {
       const message = `The same translation already exists for this text`;
-      res.status(200).json({ message });
+      res.status(409).json({ message });
       return;
     }
 
     const update = {
       translated_text,
       translated_by,
-      translation_date: Date(Date.now),
+      translation_date: Date.now(),
     };
     const proposition = await addAproposition(idText_vo, update);
     res.status(202).json(proposition);
@@ -59,12 +60,21 @@ handler.post(async (req, res) => {
 });
 
 handler.get(async (req, res) => {
-  const { skip = 0, limit = 10 } = req.query;
+  const { tid, meta = false } = req.query;
   try {
-    const proposed = await getProposedTranslations(skip, limit);
+    if (!tid)
+      throw new AppError('Un ID de texte version original est requis', 400);
+    if (!isValidObjectId(tid))
+      throw new AppError('Vous devez fournir un id valide', 400);
+    const proposed = await getPropositionByIdTextVo({
+      idTextVo: tid,
+      meta: meta === 'true',
+    });
+    if (!proposed) throw new AppError('Aucune proposition trouvée', 200);
     res.status(200).json(proposed);
   } catch (e) {
     res.status(e.code || 400).json({ message: e.message || 'Error' });
   }
 });
+
 export default handler;

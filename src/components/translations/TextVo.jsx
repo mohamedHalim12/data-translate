@@ -1,17 +1,19 @@
 /* eslint-disable camelcase */
-import Typography from '@mui/material/Typography';
+import { Typography } from '@mui/material';
+import { memo } from 'react';
+
 /**
  * @param {{
- * elRef:import('react').RefObject<HTMLParagraphElement>,
+ * elRef:import("react").RefObject<HTMLParagraphElement>,
  * text_id:string,
  * text_vo:string,
  * translated_text:string,
- * className:string
- * isSelected:boolean
- * onClick:import('react').Dispatch<import('react').SetStateAction<number>>
+ * className:string,
+ * isSelected:boolean,
+ * onClick: import("react").Dispatch<import("react").SetStateAction<number>>
  * }} props
  */
-export default function TextVo({
+function TextOriginal({
   elRef,
   text_id,
   text_vo,
@@ -33,7 +35,6 @@ export default function TextVo({
       ${translated_text ? 'bg-cyan-100' : 'bg-red-100'} 
       ${isSelected && `bg-yellow-100 border-yellow-200 `}
       bg-opacity-30 cursor-pointer ${className}
-        
         `}
       onClick={onClick}
     >
@@ -41,3 +42,7 @@ export default function TextVo({
     </Typography>
   );
 }
+
+const TextVo = memo(TextOriginal);
+TextVo.displayName = 'TextVo';
+export default TextVo;

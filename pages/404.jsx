@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 
 import AppLayout from '@/components/app/AppLayout';
-import notFOundImg from '@/images/404-dark.svg';
+import notFoundImg from '@/images/404-dark.svg';
 
 export default function NotFoundPage() {
   return (
@@ -15,7 +15,7 @@ export default function NotFoundPage() {
               p-4 w-4/5 rounded-xl bg-yellow-200 text-center 
               after:content-[" "] after:flex after:border-[15px] after:absolute
               after:-bottom-7 after:border-transparent after:border-t-yellow-200
-              after:ml-[6rem]
+              after:ml-[6rem] sm:after:-ml-14
             `}
           >
             <Typography variant='h1' component='h1' fontSize='2rem'>
@@ -30,7 +30,7 @@ export default function NotFoundPage() {
 
           <Box className='relative w-full'>
             <Image
-              src={notFOundImg}
+              src={notFoundImg}
               width={450}
               height={350}
               alt='404 page not found'
@@ -41,9 +41,9 @@ export default function NotFoundPage() {
             className={`
               flex items-center justify-center relative max-w-[50rem]
               p-4 w-4/5 rounded-xl bg-cyan-200 text-center 
-              before:content-[" "] before:flex before:border-[15px] before:absolute
-              before:-top-7 before:border-transparent before:border-b-cyan-200
-              before:ml-[6rem]
+              before:content-[" "] after:flex after:border-[15px] after:absolute
+              after:-top-7 after:border-transparent after:border-b-cyan-200
+              after:ml-[6rem] sm:after:-ml-20
             `}
           >
             <Typography variant='h1' component='h1' fontSize='2rem'>

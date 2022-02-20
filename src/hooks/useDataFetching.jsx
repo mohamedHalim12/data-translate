@@ -1,5 +1,6 @@
 import axios from 'axios';
 import useSWR from 'swr';
+
 /** @param {string} url */
 const fetcher = (url) => axios.get(url).then((res) => res.data);
 
@@ -14,8 +15,10 @@ const fetcher = (url) => axios.get(url).then((res) => res.data);
  * @param {boolean} meta
  * @param {number} start
  */
+
+/** @param {string} key */
 const useFetchSentences = (key) => {
-  /** @type {import('swr').SWRResponse<SentencesData>} */
+  /** @type {import("swr").SWRResponse<SentencesData>} */
   const res = useSWR(key, fetcher);
   const { data, error, mutate } = res;
   const hasMore = data && data.next < data.totalData;
@@ -52,7 +55,7 @@ export const useTranslatedSentences = ({
  *  data: SentenceData[],
  *  isLoading: boolean,
  *  hasMore: boolean,
- *  mutate: import('swr').KeyedMutator<QueriedSentences>
+ *  mutate: import("swr").KeyedMutator<QueriedSentences>
  * }}
  */
 export const useSentences = ({
@@ -91,4 +94,13 @@ export const useRandomSentences = ({
   const url = variantKeys[variant] || variantKeys.both;
   const key = `${url}?limit=${limit}&meta=${meta}`;
   return useFetchSentences(key);
+};
+
+/** @param {{ tid: string, meta?: boolean }} param */
+export const useProposedTranslation = ({ tid, meta = false }) => {
+  const key = `/api/sentences/proposed?tid=${tid}&meta=${meta}`;
+  /** @type {import("swr").SWRResponse<WaitingQueueData>} */
+  const res = useSWR(key, fetcher);
+  const { data, error, mutate } = res;
+  return { data, error, mutate, isLoading: !data && !error };
 };

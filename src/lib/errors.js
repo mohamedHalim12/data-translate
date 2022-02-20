@@ -1,5 +1,6 @@
 export default class AppError extends Error {
   code = 500;
+
   constructor(message = 'Internal server error', code = 500) {
     super(message);
     this.code = code;

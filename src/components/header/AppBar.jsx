@@ -25,7 +25,15 @@ export default function HeaderAppBar() {
       <AppBar position='sticky'>
         <Container>
           <Toolbar disableGutters className='flex justify-between'>
-            <AppLogo borderBase sx={{ display: { xs: 'none', md: 'flex' } }} />
+            <AppLogo
+              borderBase
+              sx={{
+                display: {
+                  xs: 'none',
+                  md: 'flex',
+                },
+              }}
+            />
             <LeftNavLinks />
             <AppLogo sx={{ display: { xs: 'flex', md: 'none' } }} />
             <RightNavLinks />
@@ -95,7 +103,11 @@ function LeftNavLinks() {
               <Button
                 key={name}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{
+                  my: 2,
+                  color: 'white',
+                  display: 'block',
+                }}
               >
                 {name}
               </Button>
