@@ -38,3 +38,30 @@ export const range = ({ start = 0, stop = 1, step = 1 }) => {
     (_, i) => begin + i * stepValue,
   );
 };
+/**
+ * @param {number} x
+ * @param {number} y
+ *  */
+export const pow = (x, y) => x ** y;
+
+/**
+ * @param {number} n
+ * @param {number} precision
+ * */
+export const round = (n, precision) => {
+  const prec = pow(10, precision);
+  return Math.round(n * prec) / prec;
+};
+
+/**
+ * @param {number} number
+ * */
+export function golfyNumber(number) {
+  const n = Number(number);
+  const { floor, abs, log, min } = Math;
+  const abbrev = ['k', 'm', 'md'];
+  let base = floor(log(abs(n)) / log(1000));
+  const suffix = abbrev[min(2, base - 1)];
+  base = abbrev.indexOf(suffix) + 1;
+  return suffix ? round(n / pow(1000, base), 2) + suffix : `${n}`;
+}

@@ -4,7 +4,7 @@ import Link from 'next/link';
 // jsdoc import for SxProps<Theme>
 
 /**
- * @typedef { import('@mui/material').SxProps<Theme> } SxProps
+ * @typedef { import("@mui/material").SxProps<Theme> } SxProps
  *
  * @param {{sx?:SxProps, size?: "small"|"medium"|"large"|"xlarge"|"2xl", borderBase?:boolean, className?:string}} props
  */
