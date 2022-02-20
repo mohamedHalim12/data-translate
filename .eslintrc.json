@@ -1,5 +1,10 @@
 {
-  "env": { "es2021": true, "node": true, "browser": true, "jest": true },
+  "env": {
+    "es2021": true,
+    "node": true,
+    "browser": true,
+    "jest": true
+  },
   "plugins": ["prettier", "simple-import-sort", "promise", "unicorn", "import"],
   "extends": [
     "eslint:recommended",
@@ -12,13 +17,21 @@
   "rules": {
     "prettier/prettier": [
       "error",
-      { "singleQuote": true, "semi": true, "jsxSingleQuote": true },
-      { "usePrettierrc": true }
+      {
+        "singleQuote": true,
+        "semi": true,
+        "jsxSingleQuote": true
+      },
+      {
+        "usePrettierrc": true
+      }
     ],
     "lines-between-class-members": [
       "error",
       "always",
-      { "exceptAfterSingleLine": true }
+      {
+        "exceptAfterSingleLine": true
+      }
     ],
     "promise/catch-or-return": "error",
     "no-console": "warn",
@@ -29,15 +42,34 @@
     "no-var": "warn",
     "no-use-before-define": [
       "error",
-      { "functions": false, "classes": true, "variables": true }
+      {
+        "functions": false,
+        "classes": true,
+        "variables": true
+      }
     ],
     "no-empty-function": "warn",
-    "no-confusing-arrow": ["error", { "allowParens": true }],
+    "no-confusing-arrow": [
+      "error",
+      {
+        "allowParens": true
+      }
+    ],
     "no-mixed-operators": "error",
-    "no-plusplus": ["warn", { "allowForLoopAfterthoughts": true }],
+    "no-plusplus": [
+      "warn",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "no-param-reassign": ["error", { "props": false }],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": false
+      }
+    ],
     "sort-imports": "off",
     "import/first": "error",
     "import/newline-after-import": "error",
@@ -55,7 +87,10 @@
     ],
     "jsx-a11y/no-noninteractive-tabindex": [
       "error",
-      { "tags": ["div", "label"], "roles": ["tabpanel"] }
+      {
+        "tags": ["div", "label"],
+        "roles": ["tabpanel"]
+      }
     ]
   },
   "settings": {
@@ -65,6 +100,7 @@
           "@/db": "./src/db",
           "@/lib": "./src/lib",
           "@/components": "./src/components",
+          "@/hooks": "./src/hooks",
           "@/theme": "./src/theme",
           "@/api-utils": "./src/api-utils",
           "@/images": "./public/images"

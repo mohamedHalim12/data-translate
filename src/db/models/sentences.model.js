@@ -11,7 +11,6 @@ const sentencesSchema = new Schema(
   { timestamps: true, versionKey: false },
 );
 const Sentences = models.Sentences || model('Sentences', sentencesSchema);
-
 models.Sentences = Sentences;
 
 export default Sentences;

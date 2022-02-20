@@ -21,3 +21,5 @@ yarn-error.log*
 /.next
 tests.js
 /.eslintcache
+src/components/translations/lst.jsx
+src/hooks/useLoadSentences.jsx

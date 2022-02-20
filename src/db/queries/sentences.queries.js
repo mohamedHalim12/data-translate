@@ -39,8 +39,9 @@ export const createSentence = async ({
 export const createManySentences = async (sentences) =>
   Sentences.insertMany(sentences);
 
+/** @return {Promise<ResponseSentences>} */
 export const getSentences = async (
-  skip = 0,
+  skip = 1,
   limit = 10,
   meta = false,
   criterias = {},
@@ -49,7 +50,13 @@ export const getSentences = async (
     text_vo: 1,
     translated_text: 1,
     text_id: '$_id',
-    ...(meta === true ? { translated_by: 1, createdAt: 1, updatedAt: 1 } : {}),
+    ...(meta === true
+      ? {
+          translated_by: 1,
+          createdAt: 1,
+          updatedAt: 1,
+        }
+      : {}),
     _id: 0,
   };
   const props = { model: Sentences, criterias, projection, skip, limit };
@@ -57,6 +64,36 @@ export const getSentences = async (
   const data = { langs, ...result };
   if (!result.data.length) delete data.langs;
   return data;
+};
+
+/**
+ * @typedef {object} Props
+ * @property {string} startId
+ * @property {Object<string,any>} criterias
+ * @property {boolean} meta
+ * @property {number} limit
+ *
+ * @param {Props} props
+ */
+
+export const getSentencesBeginWithId = async ({
+  startId,
+  limit = 10,
+  meta = false,
+  criterias = {},
+}) => {
+  const dataLt = await getSentences(-1, limit, meta, {
+    ...criterias,
+    _id: { $lt: startId },
+  });
+  const dataGte = await getSentences(-1, limit, meta, {
+    ...criterias,
+    _id: { $gte: startId },
+  });
+  const count = Number(dataLt?.count) || 0 + Number(dataGte?.count) || 0;
+  const data = [...(dataLt?.data || []), ...(dataGte?.data || [])];
+
+  return { ...dataGte, count, data, langs };
 };
 
 export const getRandomSentences = async (
@@ -68,7 +105,13 @@ export const getRandomSentences = async (
     text_vo: 1,
     translated_text: 1,
     text_id: '$_id',
-    ...(meta === true ? { translated_by: 1, createdAt: 1, updatedAt: 1 } : {}),
+    ...(meta === true
+      ? {
+          translated_by: 1,
+          createdAt: 1,
+          updatedAt: 1,
+        }
+      : {}),
     _id: 0,
   };
   const props = {
@@ -86,13 +129,13 @@ export const getRandomSentences = async (
 };
 
 export const getUntranslatedSentences = async (
-  skip = 0,
+  skip = 1,
   limit = 10,
   meta = false,
 ) => getSentences(skip, limit, meta, { translated_text: { $eq: '' } });
 
 export const getTranslatedSentences = async (
-  skip = 0,
+  skip = 1,
   limit = 10,
   meta = false,
 ) => getSentences(skip, limit, meta, { translated_text: { $ne: '' } });

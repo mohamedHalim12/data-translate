@@ -1,11 +1,13 @@
 /* eslint-disable camelcase */
-import AppError from '../../lib/errors';
-import { generateUniqueId } from '../../lib/utils';
-import WaitingQueue from '../models/wainting_queue.model';
+import { Types } from 'mongoose';
+
+import WaitingQueue from '@/db/models/wainting_queue.model';
+import AppError from '@/lib/errors';
+import { generateUniqueId } from '@/lib/utils';
 
 /**
- *  @typedef {import('mongoose').Model} Model
- *  @typedef {import('mongoose').Types.ObjectId} ObjectId
+ *  @typedef {import("mongoose").Model} Model
+ *  @typedef {import("mongoose").Types.ObjectId} ObjectId
  * */
 
 /**
@@ -38,7 +40,14 @@ export const createWaitingQueue = async ({
   const _id = generateUniqueId(translated_text).id;
   return WaitingQueue.create({
     idText_vo,
-    propositions: [{ _id, translated_text, translated_by, translation_date }],
+    propositions: [
+      {
+        _id,
+        translated_text,
+        translated_by,
+        translation_date,
+      },
+    ],
     acception_date,
     accepted_by,
   });
@@ -69,6 +78,58 @@ export const getProposedTranslations = async (
   const nextStart = next > totalProposed ? totalProposed : next;
   const count = data.length;
   return { count, next: nextStart, totalProposed, data };
+};
+/**
+ * @param {{
+ *  idTextVo:string,
+ *  projection:Object<string,any>,
+ *  meta:boolean
+ * }} param
+ *
+ * @returns {Promise<WaitingQueueData>}
+ */
+export const getPropositionByIdTextVo = async ({
+  idTextVo,
+  projection = {},
+  meta = false,
+}) => {
+  const project = {
+    _id: 0,
+    propositions: 1,
+    idText_vo: 1,
+    ...projection,
+    ...(meta
+      ? { createdAt: 1, updatedAt: 1, acception_date: 1, accepted_by: 1 }
+      : {}),
+  };
+  const [data] = await WaitingQueue.aggregate([
+    { $match: { idText_vo: Types.ObjectId(idTextVo) } },
+    {
+      $lookup: {
+        from: 'sentences',
+        localField: 'idText_vo',
+        foreignField: '_id',
+        as: 'sentences',
+      },
+    },
+    { $unwind: { path: '$propositions' } },
+    { $sort: { 'propositions.translation_date': -1 } },
+    { $addFields: { 'propositions.propId': '$propositions._id' } },
+    { $project: { 'propositions._id': 0 } },
+    {
+      $group: {
+        _id: '$idText_vo',
+        idText_vo: { $first: '$idText_vo' },
+        propositions: { $push: '$propositions' },
+        createdAt: { $first: '$createdAt' },
+        updatedAt: { $first: '$updatedAt' },
+        acception_date: { $first: '$acception_date' },
+        accepted_by: { $first: '$accepted_by' },
+      },
+    },
+    { $project: project },
+  ]);
+  return data;
 };
 
 /**
@@ -101,7 +162,7 @@ export const addAproposition = async (idText_vo, update) => {
     _id: _id || generateUniqueId(translated_text).id,
     translated_text,
     translated_by,
-    translation_date: translation_date || new Date(Date.now()),
+    translation_date: translation_date || Date.now(),
   };
   return WaitingQueue.findOneAndUpdate(
     { idText_vo },

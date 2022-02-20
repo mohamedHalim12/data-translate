@@ -1,11 +1,11 @@
 /* eslint-disable react/require-default-props */
-/* eslint-disable react/forbid-prop-types */
-/* eslint-disable react/jsx-props-no-spreading */
-import '../style/global.scss';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/jsx-props-no-spreading */
+import '../style/global.scss';
 
 import { CacheProvider } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';

@@ -1,5 +1,5 @@
 /**
- * @typedef {import('mongoose').Model} Model
+ * @typedef {import("mongoose").Model} Model
  */
 
 /**
@@ -26,12 +26,12 @@ export async function getData({
   criterias = {},
   projection = {},
 }) {
-  const data = await model
-    .find({ ...criterias }, { ...projection })
-    .skip(skip)
-    .limit(limit || 10)
-    .lean()
-    .exec();
+  const query = model.find({ ...criterias }, projection);
+  if (skip >= 0) query.skip(skip);
+  // console.log('Query >', query, skip, limit);
+  if (limit) query.limit(limit);
+
+  const data = await query.lean().exec();
   return calculateData({ model, criterias, skip, limit, data });
 }
 
