@@ -134,9 +134,10 @@ export const getPropositionByIdTextVo = async ({
 
 /**
  * @param {string} _id
+ * @param {string} idText_vo
  */
-export const existsSameProposition = async (_id) => {
-  return WaitingQueue.exists({ propositions: { $elemMatch: { _id } } });
+export const existsSameProposition = async (_id, idText_vo) => {
+  return WaitingQueue.exists({ idText_vo, 'propositions._id': _id });
 };
 
 /**
