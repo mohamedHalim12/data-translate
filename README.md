@@ -32,6 +32,8 @@ git clone git@github.com:faouziMohamed/data-translate.git
 
 ## Install dependencies and run the development server
 
+### Bare-metal server (no docker)
+
 This project use yarn as package manager feel free to use npm.
 
 ```bash
@@ -44,9 +46,19 @@ yarn
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Docker (build docker image and run the server)
 
-<!-- Database initialization with smiley -->
+```bash
+# Build the docker image
+docker build --pull --rm -f Dockerfile -t shikomori-fr:latest .
+
+# Run the docker image
+docker run -p 3000:3000 -d shikomori-fr:latest
+```
+
+---
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## 🏋️‍♂️ Database initialization
 
