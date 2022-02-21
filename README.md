@@ -69,7 +69,7 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 ## Deploy on Heroku (using a docker container)
 
-This assumes you have a Heroku account and have a [Heroku app](https://dashboard.heroku.com/apps) created.
+This assumes you have a Heroku account!!!
 
 - Install [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
 - Run the following command to create a new Heroku app:
