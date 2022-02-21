@@ -4,10 +4,9 @@ import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import { Box, Button, List, ListItem, Typography } from '@mui/material';
 import Image from 'next/image';
 
+import { RectangularSkeletonWaves } from '@/components/misc/Skeletons';
 import TextVo from '@/components/translations/TextVo';
 import emptyList from '@/images/empty-list.svg';
-
-import { RectangularSkeletonWaves } from '../misc/Skeletons';
 
 export default function ListOfSentences({
   isLoading,
@@ -21,13 +20,13 @@ export default function ListOfSentences({
   const emptyFunction = () => {};
   if (isReachingEnd) return <EmptyListIllustration />;
   return (
-    <List className='bg-white border border-gray-100 w-full flex flex-col'>
+    <List className='overflow-hidden bg-white border border-gray-100 w-full flex flex-col'>
       {isLoading ? (
         <RectangularSkeletonWaves length={10} />
       ) : (
         sentences.map(({ text_id, text_vo, translated_text }, index) => {
           return (
-            <ListItem className='w-full  p-2 flex flex-col' key={text_id}>
+            <ListItem className='w-full p-2 flex flex-col' key={text_id}>
               <TextVo
                 text_id={text_id}
                 text_vo={text_vo}

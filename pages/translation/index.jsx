@@ -77,7 +77,7 @@ export default function Index() {
         </FZDialog>
         {/* ListSentences Rendered if screen size > 640px */}
         <Box
-          sx={{ overflow: 'auto', display: { tablet: 'block', xs: 'none' } }}
+          sx={{ overflowY: 'auto', display: { tablet: 'block', xs: 'none' } }}
         >
           <UsableListOfSentences />
         </Box>

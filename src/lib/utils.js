@@ -1,5 +1,7 @@
 import { createHash } from 'crypto';
 
+import AppError from './errors';
+
 /**
  * @summary Generate the same id (hash) for the same string of 64 characters
  * @param {string} str  - string to be hashed
@@ -64,4 +66,8 @@ export function golfyNumber(number) {
   const suffix = abbrev[min(2, base - 1)];
   base = abbrev.indexOf(suffix) + 1;
   return suffix ? round(n / pow(1000, base), 2) + suffix : `${n}`;
+}
+
+export function castToAppError(e, code = 500) {
+  return e instanceof AppError ? e : new AppError(e.message, code || 500);
 }
