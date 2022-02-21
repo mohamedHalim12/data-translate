@@ -26,7 +26,7 @@ export default function ProposedTranslation({
           component='h2'
           variant='h6'
           className={`
-                      bg-cyan-100 bg-opacity-30 cursor-pointer w-full 
+                      bg-cyan-100 bg-opacity-30 w-full 
                         p-1 font-normal 
                     `}
         >

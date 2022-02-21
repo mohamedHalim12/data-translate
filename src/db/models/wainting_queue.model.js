@@ -11,7 +11,7 @@ const waitingQueueSchema = new Schema(
     },
     propositions: [
       {
-        _id: { type: String, required: true, unique: true },
+        _id: { type: String, required: true },
         translated_text: { type: String, required: true },
         translated_by: { type: String, required: true },
         translation_date: { type: Date, default: Date.now },

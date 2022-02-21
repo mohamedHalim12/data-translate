@@ -4,6 +4,7 @@ import path from 'path';
 import Sentences from '@/db/models/sentences.model';
 import { importSentences } from '@/db/queries/sentences.queries';
 import middleware from '@/lib/middlewares';
+import { castToAppError } from '@/lib/utils';
 
 const handler = nextConnect()
   .use(middleware)
@@ -22,7 +23,8 @@ const handler = nextConnect()
       importSentences(fullPath);
       res.status(201).json({ message: '🥸 Importation in progress...' });
     } catch (e) {
-      res.status(e.code || 400).json({ message: 'Error importing sentences' });
+      const error = castToAppError(e);
+      res.status(error.code || 400).json({ message: error.message || 'Error' });
     }
   });
 

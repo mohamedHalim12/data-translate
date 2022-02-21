@@ -8,6 +8,7 @@ import {
 } from '@/db/queries/sentences.queries';
 import AppError from '@/lib/errors';
 import middleware from '@/lib/middlewares';
+import { castToAppError } from '@/lib/utils';
 
 const handler = nextConnect()
   .use(middleware)
@@ -20,11 +21,13 @@ const handler = nextConnect()
         : await getSentencesUsingStartLimit(start, limit, meta);
       res.status(200).json(result);
     } catch (e) {
-      res.status(e.code || 500).json({ message: e.message });
+      const error = castToAppError(e);
+      res.status(error.code || 400).json({ message: error.message || 'Error' });
     }
   });
 
 export default handler;
+
 async function getSentencesUsingStartLimit(
   start = 1,
   limit = 10,

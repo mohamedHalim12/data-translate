@@ -3,6 +3,7 @@ import nextConnect from 'next-connect';
 import { queryRandomSentences } from '@/db/queries/sentences.queries';
 import AppError from '@/lib/errors';
 import middleware from '@/lib/middlewares';
+import { castToAppError } from '@/lib/utils';
 
 const possibleSlugs = Object.keys(queryRandomSentences);
 
@@ -24,7 +25,8 @@ const handler = nextConnect()
 
       res.status(200).json(result);
     } catch (e) {
-      res.status(e.code || 500).json({ message: e.message });
+      const error = castToAppError(e);
+      res.status(error.code || 400).json({ message: error.message || 'Error' });
     }
   });
 
