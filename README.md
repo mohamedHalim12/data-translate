@@ -46,7 +46,7 @@ yarn
 yarn dev
 ```
 
-### Docker (build docker image and run the server)
+### Docker - build docker image and run the server (a production build) 
 
 ```bash
 # Build the docker image
