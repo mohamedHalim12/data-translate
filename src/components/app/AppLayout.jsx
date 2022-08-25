@@ -24,21 +24,21 @@ export default function AppLayout({
   return (
     <Container
       className={`absolute top-0 left-0 max-w-none w-full h-full p-0 m-0 
-       ${!contentOverflow ? 'overflow-hidden' : 'overflow-auto'}
+       ${!contentOverflow ? 'overflow-hidden' : 'overflow-y-auto'}
        ${className}`}
     >
       <Container
         className={`
           grid max-w-none grid-rows-[auto_1fr] border-l  
           border-gray-50 p-0 w-full h-full 
-           ${!contentOverflow ? 'overflow-hidden' : 'overflow-auto'}
+           ${!contentOverflow ? 'overflow-hidden' : 'overflow-y-auto'}
           `}
       >
         <Header />
         <Stack
           gap={1}
           className={`
-            ${!contentOverflow ? 'overflow-hidden' : 'overflow-auto'}
+            ${!contentOverflow ? 'overflow-hidden' : 'overflow-y-auto'}
           `}
         >
           {children}

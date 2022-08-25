@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
-import { List, Skeleton, Stack, Typography } from '@mui/material';
+import { Collapse, List, Skeleton, Stack, Typography } from '@mui/material';
+import { TransitionGroup } from 'react-transition-group';
 
 import { RectangularSkeletonWaves } from '@/components/misc/Skeletons';
 import { useProposedTranslation } from '@/hooks/useDataFetching';
@@ -48,19 +49,28 @@ export default function TextTranslationPane({
         {propositionLoading || error ? (
           <RectangularSkeletonWaves length={10} />
         ) : (
-          proposed?.propositions?.map(
-            ({ propId, translated_by, translated_text, translation_date }) => (
-              <ProposedTranslation
-                key={propId}
-                propId={propId}
-                translated_text={translated_text}
-                translated_by={translated_by}
-                translation_date={translation_date}
-              />
-            ),
-          )
+          <PropositionsWithTransition proposed={proposed} />
         )}
       </List>
     </Stack>
+  );
+}
+
+function PropositionsWithTransition({ proposed }) {
+  return (
+    <TransitionGroup>
+      {proposed?.propositions?.map(
+        ({ propId, translated_by, translated_text, translation_date }) => (
+          <Collapse key={propId} in>
+            <ProposedTranslation
+              propId={propId}
+              translated_text={translated_text}
+              translated_by={translated_by}
+              translation_date={translation_date}
+            />
+          </Collapse>
+        ),
+      )}
+    </TransitionGroup>
   );
 }

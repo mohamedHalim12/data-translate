@@ -12,11 +12,12 @@ import {
 } from '@/db/queries/waitingQueue.queries';
 import AppError from '@/lib/errors';
 import middleware from '@/lib/middlewares';
-import { generateUniqueId } from '@/lib/utils';
+import { castToAppError, generateUniqueId } from '@/lib/utils';
 
 const handler = nextConnect().use(middleware);
 
 handler.post(async (req, res) => {
+  /** @type {{ idText_vo: string, translated_text: string, translated_by:string }} */
   const {
     idText_vo,
     translated_text: translated,
@@ -34,14 +35,14 @@ handler.post(async (req, res) => {
         idText_vo,
         translated_text,
         translated_by,
-        translation_date: Date(Date.now),
+        translation_date: Date(Date.now()),
       });
       res.status(202).json(proposition);
       return;
     }
 
     const { id } = generateUniqueId(translated_text);
-    if (await existsSameProposition(id)) {
+    if (await existsSameProposition(id, idText_vo)) {
       const message = `The same translation already exists for this text`;
       res.status(409).json({ message });
       return;
@@ -50,12 +51,14 @@ handler.post(async (req, res) => {
     const update = {
       translated_text,
       translated_by,
-      translation_date: Date.now(),
+      translation_date: Date(Date.now()),
     };
     const proposition = await addAproposition(idText_vo, update);
+
     res.status(202).json(proposition);
   } catch (e) {
-    res.status(e.code || 400).json({ message: e.message || 'Error' });
+    const error = castToAppError(e);
+    res.status(error.code || 400).json({ message: error.message || 'Error' });
   }
 });
 
@@ -73,7 +76,8 @@ handler.get(async (req, res) => {
     if (!proposed) throw new AppError('Aucune proposition trouvée', 200);
     res.status(200).json(proposed);
   } catch (e) {
-    res.status(e.code || 400).json({ message: e.message || 'Error' });
+    const error = castToAppError(e);
+    res.status(error.code || 400).json({ message: error.message || 'Error' });
   }
 });
 

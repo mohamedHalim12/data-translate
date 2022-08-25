@@ -1,5 +1,6 @@
 import GradingTwoToneIcon from '@mui/icons-material/GradingTwoTone';
-import { Box, Button, TextField } from '@mui/material';
+import { Alert, Box, Button, Snackbar, TextField } from '@mui/material';
+import Slide from '@mui/material/Slide';
 import axios from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -48,9 +49,9 @@ export default function AddProposition({
         String(err.message).endsWith('409') && setExists(true);
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [proposedTranslation, selectedSentence?.text_id],
+    [mutate, proposedTranslation, selectedSentence?.text_id],
   );
+  const label = 'Proposer une traduction';
   return (
     <Box
       autoComplete='off'
@@ -59,6 +60,17 @@ export default function AddProposition({
       className='flex flex-col gap-0 mt-1'
       ref={formRef}
     >
+      <Snackbar
+        open={exists}
+        autoHideDuration={6000}
+        onClose={() => setExists(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        TransitionComponent={SlideTransition}
+      >
+        <Alert onClose={() => setExists(false)} severity='error' className=''>
+          La traduction que vous avez proposée existe déjà.
+        </Alert>
+      </Snackbar>
       <TextField
         className='w-full text-xl border-0 outline-none'
         autoFocus
@@ -68,13 +80,13 @@ export default function AddProposition({
         type='text'
         defaultValue={proposedTranslation}
         error={exists}
-        placeholder='Proposer une traduction'
+        placeholder={label}
         onChange={(e) => {
           // eslint-disable-next-line no-unused-expressions
           exists && setExists(false);
           setProposedTranslation(e.target.value);
         }}
-        label='Proposer une traductions'
+        label={label}
         variant='outlined'
       />
       <Button
@@ -86,4 +98,9 @@ export default function AddProposition({
       </Button>
     </Box>
   );
+}
+
+function SlideTransition(props) {
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  return <Slide {...props} direction='down' />;
 }
